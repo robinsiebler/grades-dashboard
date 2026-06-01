@@ -1,0 +1,170 @@
+.admin-card {
+    width: fit-content;
+    min-width: 620px;
+    max-width: 92%;
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.admin-header h2 {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.btn-columns {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.btn-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-col button {
+    width: 100%;
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 14px;
+}
+
+.btn-col button.active {
+    background: #0056b3;
+}
+
+.btn-col.green button {
+    background: #28a745;
+}
+
+.btn-col.green button:hover {
+    background: #218838;
+}
+
+.btn-col.green button.active {
+    background: #155724;
+}
+
+.input-panel {
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.input-panel.visible {
+    display: block;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.input-row input {
+    flex: 1;
+    min-width: 120px;
+    max-width: 200px;
+    width: auto;
+    margin: 0;
+}
+
+.input-row button {
+    width: auto;
+    margin: 0;
+    padding: 8px 18px;
+    font-size: 14px;
+}
+
+.results-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 16px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.results-table th,
+.results-table td {
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.results-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.results-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.results-table tbody tr:hover {
+    background-color: #f0f4ff;
+}
+
+.result-card {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.result-card p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.error-msg {
+    color: #dc3545;
+    margin-top: 10px;
+}
+
+.success-msg {
+    color: #28a745;
+    margin-top: 10px;
+}
+
+.logout-btn {
+    background: #dc3545;
+    width: auto;
+    margin: 0;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.logout-btn:hover {
+    background: #c82333;
+}
+
+.delete-btn {
+    background: #dc3545;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}

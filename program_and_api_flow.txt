@@ -1,0 +1,33 @@
+Program Flow
+
+ Frontend UI
+      ↓
+ app.js
+      ↓
+ Fetch API Call
+      ↓
+ Express Backend API
+      ↓
+ Business Logic
+      ↓
+ Oracle Database
+      ↓
+ Response Returned
+      ↓
+ UI Updated
+
+API test FLow 
+
+Supertest
+    ↓
+Fake API Request
+    ↓
+Express Server
+    ↓
+Business Logic
+    ↓
+Database Insert
+    ↓
+Response Returned
+    ↓
+Jest Validates Result

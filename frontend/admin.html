@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="admin-card">
+
+        <div class="admin-header">
+            <h2>Grade Database Administration</h2>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Action button columns -->
+        <div class="btn-columns">
+            <div class="btn-col">
+                <button id="btn-get-all"   onclick="showPanel('get-all'); getStudents()">Get Students</button>
+                <button id="btn-get-id"    onclick="showPanel('get-id')">Get Student (ID)</button>
+                <button id="btn-get-name"  onclick="showPanel('get-name')">Get Student (Name)</button>
+            </div>
+            <div class="btn-col green">
+                <button id="btn-top10"     onclick="showPanel('top10'); getToppers()">Top 10%</button>
+                <button id="btn-low-att"   onclick="showPanel('low-att'); getLowAttendance()">Low Attendance</button>
+                <button id="btn-analytics" onclick="showPanel('analytics'); getAnalytics()">Analytics</button>
+            </div>
+            <div class="btn-col">
+                <button id="btn-update"    onclick="showPanel('update')">Update Student</button>
+                <button id="btn-delete" class="delete-btn" onclick="showPanel('delete')">Delete Student</button>
+            </div>
+        </div>
+
+        <!-- Get all students (no inputs needed) -->
+        <div id="panel-get-all" class="input-panel"></div>
+
+        <!-- Get student by ID -->
+        <div id="panel-get-id" class="input-panel">
+            <div class="input-row">
+                <input type="number" id="input-get-id" placeholder="Student ID"
+                    onkeydown="if(event.key==='Enter') getStudentById()">
+                <button onclick="getStudentById()">Fetch</button>
+            </div>
+        </div>
+
+        <!-- Get student by name -->
+        <div id="panel-get-name" class="input-panel">
+            <div class="input-row">
+                <input type="text" id="input-get-name" placeholder="Student Name"
+                    onkeydown="if(event.key==='Enter') getStudentByName()">
+                <button onclick="getStudentByName()">Search</button>
+            </div>
+        </div>
+
+        <!-- Top 10% (no inputs needed) -->
+        <div id="panel-top10" class="input-panel"></div>
+
+        <!-- Low attendance (no inputs needed) -->
+        <div id="panel-low-att" class="input-panel"></div>
+
+        <!-- Analytics (no inputs needed) -->
+        <div id="panel-analytics" class="input-panel"></div>
+
+        <!-- Update student subject -->
+        <div id="panel-update" class="input-panel">
+            <div class="input-row">
+                <input type="number" id="input-update-id"         placeholder="Student ID">
+                <input type="text"   id="input-update-subject"    placeholder="Subject">
+                <input type="number" id="input-update-grades"     placeholder="Grade">
+                <input type="number" id="input-update-attendance" placeholder="Attendance">
+                <button onclick="updateStudent()">Update</button>
+            </div>
+        </div>
+
+        <!-- Delete student -->
+        <div id="panel-delete" class="input-panel">
+            <div class="input-row">
+                <input type="number" id="input-delete-id" placeholder="Student ID"
+                    onkeydown="if(event.key==='Enter') deleteStudent()">
+                <button class="delete-btn" onclick="deleteStudent()">Delete</button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="results-panel"></div>
+
+    </div>
+
+    <script src="admin.js"></script>
+
+</body>
+</html>

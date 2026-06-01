@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Grades Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+
+    <div class="page-center">
+
+        <div class="cards-wrapper">
+
+            <div class="card inputs-card">
+
+                <h2>Student Performance System</h2>
+
+                <input type="text" id="name" placeholder="Student Name" readonly>
+
+                <input type="text" id="subject" placeholder="Subject">
+
+                <input type="number" id="grades" placeholder="Grade">
+
+                <input type="number" id="attendance" placeholder="Attendance">
+
+            </div>
+
+            <div class="card action-card">
+
+                <button onclick="calculateResult()">Submit</button>
+
+                <button onclick="viewGrades(); viewGPA()">View Grades/GPA</button>
+
+
+                <button class="logout-btn" onclick="logout()">Logout</button>
+
+            </div>
+
+        </div>
+
+        <h3 id="result"></h3>
+
+        <div class="bottom-row">
+            <div class="grades-table-wrapper" id="grades-table-container"></div>
+            <div id="gpa-card-container"></div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>

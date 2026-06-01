@@ -1,0 +1,133 @@
+/* Add specific styles for login/register forms */
+.login-container, .register-container {
+    width: 400px;
+}
+
+.toggle-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.toggle-link a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.success-message {
+    color: #28a745;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    margin: 50px auto;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.card,
+.result-card {
+    text-align: center;
+    width: 50%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 20px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.result-card p {
+    font-size: 18px;
+}
+
+.lookup-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    align-items: center;
+}
+
+.lookup-form input {
+    flex: 1;
+    margin-top: 0;
+}
+
+.lookup-form button {
+    width: auto;
+    margin-top: 0;
+    white-space: nowrap;
+    padding: 10px 20px;
+}
+
+/* Admin login button - tightly fitting, right-aligned */
+.admin-login-btn {
+    width: auto !important;
+    margin-top: 0 !important;
+    white-space: nowrap;
+    padding: 12px 15px !important;
+    padding-right: 10px !important;
+    background: #ff0000 !important;
+    color: white !important;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.admin-button-container {
+    text-align: right !important;
+    padding-right: 10px !important;
+}

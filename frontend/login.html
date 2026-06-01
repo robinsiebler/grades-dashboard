@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Grade Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome Back!</h1>
+        <p>Please sign in to continue</p>
+
+        <!-- Login View -->
+        <div id="loginView">
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginUsername">Username:</label>
+                    <input type="text" id="loginUsername" name="username" required placeholder="Enter your username">
+                </div>
+                <div class="input-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" name="password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="primary-btn">Login</button>
+            </form>
+            <p class="toggle-link">Don't have an account? <a href="#" id="registerBtn">Sign up here</a></p>
+        </div>
+
+        <!-- Register View -->
+        <div id="registerView" style="display: none;">
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="regUsername">Create Account:</label>
+                    <input type="text" id="regUsername" name="username" required placeholder="Enter a new username">
+                </div>
+                <div class="input-group">
+                    <label for="regPassword">Set Password:</label>
+                    <input type="password" id="regPassword" name="password" required placeholder="Create a password">
+                </div>
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px;">
+                    <input type="checkbox" id="adminCheckbox" name="isAdmin" style="width: auto; margin: 0; cursor: pointer;">
+                    <label for="adminCheckbox" style="margin: 0; cursor: pointer;">Admin</label>
+                </div>
+                <div class="input-group" id="adminPasswordGroup" style="display: none;">
+                    <label for="adminPassword">Admin Password:</label>
+                    <input type="password" id="adminPassword" name="adminPassword" placeholder="Enter admin password">
+                </div>
+                <button type="submit" class="primary-btn" style="background: #28a745;">Create Account</button>
+            </form>
+            <p class="toggle-link">Already have an account? <a href="#" id="loginBtn">Back to Login</a></p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMsg" class="error-message"></div>
+
+        <!-- Success Message -->
+        <div id="successMsg" class="success-message"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000';
+        let currentForm = 'login';
+
+        // Toggle between login and register forms
+        function showRegister() {
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('registerView').style.display = 'block';
+            currentForm = 'register';
+        }
+
+        function showLogin() {
+            document.getElementById('registerView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'block';
+            currentForm = 'login';
+            // Clear any success messages
+            document.getElementById('successMsg').textContent = '';
+        }
+
+        // Reset all register form fields back to their default state
+        function resetRegisterForm() {
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('adminCheckbox').checked = false;
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPasswordGroup').style.display = 'none';
+        }
+
+        // Toggle admin password field when checkbox is clicked
+        document.getElementById('adminCheckbox')?.addEventListener('change', (e) => {
+            const adminGroup = document.getElementById('adminPasswordGroup');
+            const adminInput = document.getElementById('adminPassword');
+            if (e.target.checked) {
+                adminGroup.style.display = 'block';
+                adminInput.required = true;
+            } else {
+                adminGroup.style.display = 'none';
+                adminInput.required = false;
+                adminInput.value = '';
+            }
+        });
+
+        // Handle "Sign up here" link click
+        document.getElementById('registerBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showRegister();
+        });
+
+        // Handle "Back to Login" link click
+        document.getElementById('loginBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showLogin();
+        });
+
+        // Handle login form submission
+        document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            errorMsg.textContent = '';
+            successMsg.textContent = 'Logging in...';
+
+            if (!username || !password) {
+                errorMsg.textContent = 'Please enter both username and password';
+                return;
+            }
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    sessionStorage.setItem('loggedInUser', username);
+                    window.location.href = data.isAdmin
+                        ? '/frontend/admin.html'
+                        : '/frontend/index.html';
+                } else {
+                    const data = await response.json();
+                    errorMsg.textContent = data.message || 'Invalid credentials';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                if (error.name === 'AbortError') {
+                    errorMsg.textContent = 'Login timed out. Please try again.';
+                } else {
+                    errorMsg.textContent = 'Server connection failed. Check your internet and try again.';
+                }
+            } finally {
+                successMsg.textContent = '';
+            }
+        });
+
+        // Handle register form submission
+        document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const isAdmin = document.getElementById('adminCheckbox').checked;
+            const adminPassword = document.getElementById('adminPassword').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            // Clear previous messages
+            errorMsg.textContent = '';
+            successMsg.textContent = 'Creating account...';
+
+            if (!username || !password) {
+                errorMsg.textContent = 'Please enter both username and password';
+                successMsg.textContent = '';
+                return;
+            }
+
+            if (isAdmin && adminPassword !== 'admin123') {
+                errorMsg.textContent = 'Incorrect admin password.';
+                successMsg.textContent = '';
+                return;
+            }
+
+            try {
+                // Call POST /register API with timeout handling
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch(`${API_BASE}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, isAdmin }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    resetRegisterForm();
+                    sessionStorage.setItem('loggedInUser', username);
+                    window.location.href = data.isAdmin
+                        ? '/frontend/admin.html'
+                        : '/frontend/index.html';
+                } else {
+                    const data = await response.json();
+                    errorMsg.textContent = data.message || 'Account creation failed. Username may already exist.';
+                }
+            } catch (error) {
+                console.error('Register error:', error);
+                if (error.name === 'AbortError') {
+                    errorMsg.textContent = 'Registration timed out. Please try again.';
+                } else {
+                    errorMsg.textContent = 'Server connection failed. Check your internet and try again.';
+                }
+            } finally {
+                successMsg.textContent = '';
+            }
+        });
+
+        // Make functions globally accessible for onclick handlers
+        window.showRegister = showRegister;
+        window.showLogin = showLogin;
+
+    </script>
+</body>
+</html>
